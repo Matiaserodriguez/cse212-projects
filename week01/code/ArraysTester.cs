@@ -39,7 +39,19 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return new double[0]; // replace this return statement with your own
+        // first: create a new fixed list of double data type with the length of the "length" parameter
+        // second: create a for loop iterating over the length and iniciating the variable at 1
+        // third: the iterating number should be multiplied by the double number of the parameter
+        // fourth: add the operation result to the double[length] per iteration at the i-1 index, until finishing the loop
+        // fifth: return the double fixed list created at the beggining
+
+        double[] doubleList = new double[length];
+        for(int i = 1; i <= length; ++i) {
+            double newNumber = number * i;
+            doubleList[i -1] = newNumber;
+        }
+
+        return doubleList; // replace this return statement with your own
     }
     
     /// <summary>
@@ -57,5 +69,15 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
+        // first: get the start index with the length of the list mainess the amount
+        // second: get the numbers in a new List variable with the start index and the amount as parameters
+        // third: slice the principal list of the array within the same range of the second point
+        // fourth: add to the beggining of the principal list the variable obtained at second step
+        
+        int startIndex = data.Count - amount;
+        
+        List<int> numbersFirst = data.GetRange(startIndex, amount);
+        data.RemoveRange(startIndex, amount);
+        data.InsertRange(0, numbersFirst);
     }
 }
