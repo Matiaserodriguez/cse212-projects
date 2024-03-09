@@ -12,10 +12,11 @@
         players.AddPerson("Bob", 2);
         players.AddPerson("Tim", 5);
         players.AddPerson("Sue", 3);
+        // Console.WriteLine("---players---");    // This can be un-commented out for debug help
         // Console.WriteLine(players);    // This can be un-commented out for debug help
         while (players.Length > 0)
             players.GetNextPerson();
-        // Defect(s) Found: 
+        // Defect(s) Found: Enqueuing was inserting objects at the beggining of the queue instead of enqueing them at the end.
 
         Console.WriteLine("---------");
 
@@ -38,7 +39,7 @@
         while (players.Length > 0)
             players.GetNextPerson();
 
-        // Defect(s) Found: 
+        // Defect(s) Found: No Erros found
 
         Console.WriteLine("---------");
 
@@ -56,7 +57,7 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: Tim isn't added again to the queue
 
         Console.WriteLine("---------");
 
