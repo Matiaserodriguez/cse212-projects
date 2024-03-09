@@ -14,6 +14,14 @@ public class CustomerService {
         // Scenario: 
         // Expected Result: 
         Console.WriteLine("Test 1");
+        var cs1 = new CustomerService(8);
+        RunAddCustomer(cs1, 11);
+
+        Console.WriteLine("=================");
+
+        Console.WriteLine("Test 2");
+        var cs2 = new CustomerService(3);
+        RunAddCustomer(cs2, 5);
 
         // Defect(s) Found: 
 
@@ -33,6 +41,13 @@ public class CustomerService {
 
     private readonly List<Customer> _queue = new();
     private readonly int _maxSize;
+
+    public static bool RunAddCustomer(CustomerService customerService, int integer) {
+        for (var i = 0; i < integer; ++i) {
+            customerService.AddNewCustomer($"name {i}", $"{i}", "problem");
+        }
+        return false;
+    }
 
     public CustomerService(int maxSize) {
         if (maxSize <= 0)
@@ -65,7 +80,7 @@ public class CustomerService {
     /// Prompt the user for the customer and problem information.  Put the 
     /// new record into the queue.
     /// </summary>
-    private void AddNewCustomer() {
+    private void AddNewCustomer(string nameU, string accountIdU, string problemU) {
         // Verify there is room in the service queue
         if (_queue.Count > _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
@@ -73,11 +88,11 @@ public class CustomerService {
         }
 
         Console.Write("Customer Name: ");
-        var name = Console.ReadLine()!.Trim();
+        var name = $"{nameU}";
         Console.Write("Account Id: ");
-        var accountId = Console.ReadLine()!.Trim();
+        var accountId = $"{accountIdU}";
         Console.Write("Problem: ");
-        var problem = Console.ReadLine()!.Trim();
+        var problem = $"{problemU}";
 
         // Create the customer object and add it to the queue
         var customer = new Customer(name, accountId, problem);
