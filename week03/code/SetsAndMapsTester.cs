@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.VisualBasic;
 
 public static class SetsAndMapsTester {
     public static void Run() {
@@ -111,6 +112,19 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+        HashSet<List<string>> stringList = [];
+        foreach (var word in words) {
+            if(word[0] == word[1]) continue;
+            if(words.Contains($"{word[1]}{word[0]}")){
+                string string1 = word[0].ToString() + word[1];
+                string string2 = word[1].ToString() + word[0];
+                List<string> normalString = [string1, string2]; 
+                stringList.Add(normalString);
+            }
+        }
+
+        foreach (List<string> list in stringList)
+            Console.WriteLine($"stringList: {{{string.Join(", ", list)}}}");
     }
 
     /// <summary>
@@ -132,6 +146,11 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            if(degrees.ContainsKey(fields[3])) {
+                ++degrees[fields[3]];
+                continue;
+            }
+            degrees[fields[3]] = 1;
         }
 
         return degrees;
@@ -158,7 +177,42 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        var anagram1 = new Dictionary<string, int>();
+        var anagram2 = new Dictionary<string, int>();
+        foreach (char word in word1)
+        {   
+            if(word == ' ') continue;
+            string wordString = word.ToString();
+            if (anagram1.ContainsKey(wordString.ToUpper())){
+                anagram1[wordString.ToUpper()] += 1;
+                continue;
+            }
+            anagram1[wordString.ToUpper()] = 1;
+        }
+
+        foreach (char word in word2)
+        {
+            if(word == ' ') continue;
+            string wordString = word.ToString();
+            if (anagram2.ContainsKey(wordString.ToUpper())){
+                anagram2[wordString.ToUpper()] += 1;
+                continue;
+            }
+            else anagram2[wordString.ToUpper()] = 1;
+        }
+
+        bool returnBool = false;
+        foreach(var anagramWord in anagram1.Keys) {
+            if (anagram2.ContainsKey(anagramWord) && anagram2[anagramWord] == anagram1[anagramWord]) 
+            {
+                returnBool = true;
+            } else {
+                returnBool = false;
+                break;
+            }
+        }
+
+        return returnBool;
     }
 
     /// <summary>
@@ -235,5 +289,13 @@ public static class SetsAndMapsTester {
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+        foreach(var feature in featureCollection.Features) {
+            var title = feature.Properties.Title;
+            int titleIndex = feature.Properties.Title.IndexOf('-');
+            if (titleIndex != -1)
+                title = title.Substring(titleIndex + 2);
+
+            Console.WriteLine($"{title} - {feature.Properties.Place} - {feature.Properties.Mag}");
+        }
     }
 }
