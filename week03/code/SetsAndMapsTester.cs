@@ -108,23 +108,28 @@ public static class SetsAndMapsTester {
     /// that there were no duplicates) and therefore should not be displayed.
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
+    /// 
+
+    // I WAS ABLE TO SOLVE THE PROBLEM: MON 18 Mar 2024
     private static void DisplayPairs(string[] words) {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
-        HashSet<List<string>> stringList = [];
+        HashSet<string> stringList = [];
         foreach (var word in words) {
             if(word[0] == word[1]) continue;
             if(words.Contains($"{word[1]}{word[0]}")){
                 string string1 = word[0].ToString() + word[1];
                 string string2 = word[1].ToString() + word[0];
-                List<string> normalString = [string1, string2]; 
+                string normalString = $"{string1} & {string2}"; 
+                string normalStringReversed = $"{string2} & {string1}";
+                if (stringList.Contains(normalString) || stringList.Contains(normalStringReversed)) continue;
                 stringList.Add(normalString);
             }
         }
 
-        foreach (List<string> list in stringList)
-            Console.WriteLine($"stringList: {{{string.Join(", ", list)}}}");
+        foreach (string list in stringList)
+            Console.WriteLine(list);
     }
 
     /// <summary>
